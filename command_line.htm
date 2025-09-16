@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" Content="text/html; charset=Windows-1252">
+<TITLE>Command Line</TITLE>
+<LINK REL="stylesheet" TYPE="text/css" HREF="htmlhelp.css"> 
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<OBJECT TYPE="application/x-oleobject" CLASSID="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+	<PARAM NAME="Keyword" VALUE="Command Line">
+</OBJECT>
+
+<H1>Command Line</H1>
+
+<P>To perform batch conversion or call conversion procedure from an automation 
+script you can use console version of MSSQL-to-PostgreSQL called M2PAGENT.EXE. 
+Find this file in MSSQL-to-PostgreSQL installation folder. You can either run 
+this tool directly from command line or call it from any script as well. The 
+program supports the following command-line options:</P>
+
+<TABLE cols=2 width=587>
+<TR VALIGN="top">
+  <TD nowrap>--as_dbo</TD>
+  <TD>&nbsp;</TD>
+  <TD>connect to MS SQL server as database owner<TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--case_sense</TD>
+  <TD>&nbsp;</TD>
+  <TD>make names case sensitive (default is off)<TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--dest=...</TD>
+  <TD>&nbsp;</TD>
+  <TD>PostgreSQL database or script file</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--dump</TD>
+  <TD>&nbsp;</TD>
+  <TD>convert MS SQL database into PostgreSQL file</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--encoding=...</TD>
+  <TD>&nbsp;</TD>
+  <TD><a href="#encoing">PostgreSQL character set</a></TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--fast_insert</TD>
+  <TD>&nbsp;</TD>
+  <TD>use COPY-statements to write data in PostgreSQL database 
+   (faster than INSERT, it is supported starting from v9.5)</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--help</TD>
+  <TD>&nbsp;</TD>
+  <TD>display help message and exit</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--logfile=...</TD>
+  <TD>&nbsp;</TD>
+  <TD>path to the logfile where execution traces will be written</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--mode=...</TD>
+  <TD>&nbsp;</TD>
+  <TD>how to process an existing PostgreSQL database 
+      (0 - overwrite the entire database, 1 - overwrite existing 
+      tables only, 2 - skip existing tables, 3 - merge, 
+      4 - <a href="mss740la.htm">synchronize</a>)</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--mschema</TD>
+  <TD>&nbsp;</TD>
+  <TD>MS SQL schema ('Full Replication' if none)</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--mssqlh=...</TD>
+  <TD>&nbsp;</TD>
+  <TD>MS SQL server IP address or network name</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--mssqlu=...</TD>
+  <TD>&nbsp;</TD>
+  <TD>MS SQL user name</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--mssqlp=...</TD>
+  <TD>&nbsp;</TD>
+  <TD>MS SQL user password</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--owned</TD>
+  <TD>&nbsp;</TD>
+  <TD>convert tables owned by the user only</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--pgport=...</TD>
+  <TD>&nbsp;</TD>
+  <TD>PostgreSQL port</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--posgsh=...</TD>
+  <TD>&nbsp;</TD>
+  <TD>PostgreSQL server IP address or network name</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--posgsu=...</TD>
+  <TD>&nbsp;</TD>
+  <TD>PostgreSQL user name</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--posgsp=...</TD>
+  <TD>&nbsp;</TD>
+  <TD>PostgreSQL user password</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--owned</TD>
+  <TD>&nbsp;</TD>
+  <TD>convert tables owned by the user only</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--profile=...</TD>
+  <TD>&nbsp;</TD>
+  <TD>path to the file to load conversion settings from</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--pschema</TD>
+  <TD>&nbsp;</TD>
+  <TD>PostgreSQL schema ('public' by default)</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--silent</TD>
+  <TD>&nbsp;</TD>
+  <TD>use this option to disable program output</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--skip_idx</TD>
+  <TD>&nbsp;</TD>
+  <TD>skip converting indexes</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--src=...</TD>
+  <TD>&nbsp;</TD>
+  <TD>MS SQL database name</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--ssl_root_cert=...</TD> 
+  <TD>&nbsp;</TD>
+  <TD>path to SSL certificate authority (CA) certificate</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--ssl_revoc_list=...</TD>
+  <TD>&nbsp;</TD>
+  <TD>path to SSL certificate revocation list (CRL)</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--tab_def</TD>
+  <TD>&nbsp;</TD>
+  <TD>convert table definitions only</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--tab_file=...</TD>
+  <TD>&nbsp;</TD>
+  <TD>name of the file containing table names to convert (one table name 
+      per line)</TD>
+</TR><TR VALIGN="top">
+  <TD nowrap>--unlogged</TD>
+  <TD>&nbsp;</TD>
+  <TD>create PostgreSQL tables unlogged</TD>
+</TR></TABLE>
+
+<P>In the following example the program converts local MS SQL database 
+&quot;db1&quot; into PostgreSQL database &quot;db1 from mssql&quot; on the remote 
+PostgreSQL server &quot;PostgreSQLhost&quot; using table names file 
+&quot;c:\tabfile1.txt&quot;:</P>
+
+<PRE>
+M2PAGENT.EXE --src=db1 --dest="db1 from mssql" --posgsh=mysqlhost --posgsu=administrator 
+--posgsp=the_passsword --tab_file=c:\tabfile1.txt
+</PRE>
+
+<P>Table names file should be formatted as follows:</P>
+<P><CODE>
+Table_1<BR>
+Table_2<BR>
+...<BR>
+Table_N<BR>
+</CODE></P>
+
+<P>&nbsp;<P><B>Notes:</B><BR>
+<OL>
+   <LI>If you specified a profile, there is no need to specify any other 
+       parameters</LI>
+   <LI>You can omit 'mssqlh' or 'mysqlh' to connect local database server</LI>
+   <LI>You can omit 'mssqlu' and 'mssqlp' parameters to connect to MS SQL 
+       server using Windows authentication</LI>
+   <LI>It is necessary to specify PostgreSQL port parameter only if 
+       it differs from the default: 5432</LI>
+   <LI>If you omit 'tab_file' parameter, all database tables will be 
+       converted</LI>
+   <LI>If you omit 'mode' parameter, default mode 'overwrite the entire 
+       database' will be used</LI>
+   <LI>Command line parameters that contain spaces should be enclosed in 
+       quotes (for example --dest=&quot;my database&quot;)</LI>
+</OL>
+
+<P>&nbsp;<P><a name="#encoing"></a><B>PostgreSQL character sets</B>
+
+<P>This parameter specifies encoding of text values in the destination 
+PostgreSQL database. It can have one of the following values (default 
+is 'UTF8'):
+
+<TABLE width=587 border=0>
+    <TR><TD>BIG5</TD>
+    <TD>EUC_CN</TD>
+    <TD>EUC_JP</TD>
+    <TD>EUC_KR</TD>
+    <TD>EUC_TW</TD></TR>
+
+    <TR><TD>GB18030</TD>
+    <TD>GBK</TD>
+    <TD>ISO8859-1</TD>
+    <TD>ISO8859-2</TD>
+    <TD>ISO8859-3</TD></TR>
+
+    <TR><TD>ISO8859-4</TD>
+    <TD>ISO8859-5</TD>
+    <TD>ISO8859-6</TD>
+    <TD>ISO8859-7</TD>
+    <TD>ISO8859-8</TD></TR>
+
+    <TR><TD>ISO8859-9</TD>
+    <TD>KOI8R</TD>
+    <TD>KOI8U</TD>
+    <TD>SJIS</TD>
+    <TD>UHC</TD></TR>
+
+    <TR><TD>UTF8</TD>
+    <TD>WIN1250</TD>
+    <TD>WIN1251</TD>
+    <TD>WIN1252</TD>
+    <TD>WIN1253</TD></TR>
+
+    <TR><TD>WIN1254</TD>
+    <TD>WIN1255</TD>
+    <TD>WIN1256</TD>
+    <TD>WIN1257</TD>
+    <TD>WIN1258</TD></TR>
+</TABLE>
+</BODY>
+</HTML>
